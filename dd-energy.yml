@@ -1,0 +1,549 @@
+# CREDITS TO https://community.openhab.org/t/energy-widget-like-in-home-assistant-demo/131189
+uid: dd-energy
+tags: []
+props:
+  parameters:
+    - context: string
+      description: Title
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - context: string
+      description: "Value Font Size (ex: 12px)"
+      label: Value Font Size
+      name: value_fontsize
+      required: true
+      type: TEXT
+    - context: string
+      description: "Subvalue Font Size (ex: 12px)"
+      label: Subvalue Font Size
+      name: subvalue_fontsize
+      required: true
+      type: TEXT
+    - context: string
+      description: "Value Border Radius (ex: 5px)"
+      label: Value Border Radius
+      name: value_borderradius
+      required: false
+      type: TEXT
+    - context: string
+      description: "Grid Color (ex: red, #FFF000)"
+      label: Grid Color
+      name: grid_color
+      required: false
+      type: TEXT
+    - context: string
+      description: "Grid Surplus Color (ex: red, #FFF000)"
+      label: Grid Surplus Color
+      name: grid_surplus_color
+      required: false
+      type: TEXT
+    - context: string
+      description: "Solar Color (ex: red, #FFF000)"
+      label: Solar Color
+      name: solar_color
+      required: false
+      type: TEXT
+    - context: string
+      description: "Home Color (ex: red, #FFF000)"
+      label: Home Color
+      name: home_color
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for grid consumption
+      label: Grid Consumption
+      name: grid_consumption
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for grid surplus
+      label: Grid Surplus
+      name: grid_surplus
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for pv production
+      label: PV Production
+      name: pv_production
+      required: false
+      type: TEXT
+    - context: item
+      label: PV Own Consumption
+      name: pv_own_consumption
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for home consumption
+      label: Home Consumption
+      name: home_consumption
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for home FF consumption
+      label: Home FF Consumption
+      name: home_ff_consumption
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for home GF consumption
+      label: Home GF Consumption
+      name: home_gf_consumption
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for home BA consumption
+      label: Home BA Consumption
+      name: home_ba_consumption
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for real time consumption
+      label: Real Time Consumption
+      name: realtime_consumption
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Feb 7, 2025, 6:15:36 PM
+component: f7-card
+config:
+  title: =props.title
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          --f7-block-font-size: 12px
+          --f7-theme-color: var(--f7-text-color)
+          margin: 0
+          padding: 0
+      slots:
+        default:
+          - component: f7-block
+            config:
+              style:
+                display: flex
+                justify-content: space-between
+                margin: 0
+                padding: 0
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      align-items: center
+                      display: flex
+                      flex-direction: column
+                      padding-left: 5px
+                      padding-top: 130px
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems:
+                            - =props.grid_surplus
+                          iconColor: =props.grid_surplus_color
+                          iconF7: arrow_left
+                          iconSize: 12px
+                          style:
+                            font-size: =props.subvalue_fontsize
+                            white-space: nowrap
+                          text: =@props.grid_surplus
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems:
+                            - =props.grid_consumption
+                          iconColor: =props.grid_color
+                          iconF7: arrow_right
+                          iconSize: 12px
+                          style:
+                            font-size: =props.subvalue_fontsize
+                            white-space: nowrap
+                          text: =@props.grid_consumption
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            border-color: =props.grid_color
+                            border-radius: 50px
+                            border-style: solid
+                            border-width: 2px
+                            display: flex
+                            flex-direction: column
+                            height: 100px
+                            justify-content: top
+                            margin-bottom: 10px
+                            margin-top: 5px
+                            padding-top: 10px
+                            width: 100px
+                        slots:
+                          default:
+                            - component: oh-icon
+                              config:
+                                color: =props.grid_color
+                                height: 75px
+                                icon: if:mdi:transmission-tower
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems:
+                            - =props.realtime_consumption
+                          style:
+                            border-color: =props.grid_color
+                            border-radius: =props.value_borderradius
+                            border-style: solid
+                            border-width: 1px
+                            font-size: =props.value_fontsize
+                            padding: 5px
+                            white-space: nowrap
+                          text: =@props.realtime_consumption
+                - component: f7-col
+                  config:
+                    style:
+                      align-items: center
+                      display: flex
+                      flex-direction: column
+                      flex-grow: 1
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems:
+                            - =props.pv_production
+                          style:
+                            border-color: =props.solar_color
+                            border-radius: =props.value_borderradius
+                            border-style: solid
+                            border-width: 1px
+                            font-size: =props.value_fontsize
+                            margin-bottom: 10px
+                            padding: 5px
+                          text: =@props.pv_production
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            border-color: =props.solar_color
+                            border-radius: 50px
+                            border-style: solid
+                            border-width: 2px
+                            display: flex
+                            flex-direction: column
+                            height: 100px
+                            justify-content: top
+                            padding-top: 20px
+                            width: 100px
+                        slots:
+                          default:
+                            - component: oh-icon
+                              config:
+                                color: =props.solar_color
+                                height: 60px
+                                icon: if:ph:solar-panel-thin
+                      - component: f7-block
+                        config:
+                          style:
+                            display: flex
+                            height: 125px
+                            justify-content: center
+                            margin: 0
+                            padding: 0
+                            width: 100%
+                        slots:
+                          default:
+                            - component: f7-row
+                              config:
+                                preserveAspectRatio: xMidYMid slice
+                                style:
+                                  height: auto
+                                tag: svg
+                                viewBox: 0 0 100 100
+                                xmlns: http://www.w3.org/2000/svg
+                              slots:
+                                default:
+                                  - component: f7-row
+                                    config:
+                                      d: M53,0 v15 c0,40 10,35 30,35 h20
+                                      fill: none
+                                      id: path1
+                                      stroke: =props.solar_color
+                                      stroke-width: 1
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: =#props.pv_own_consumption > 0
+                                  - component: f7-row
+                                    config:
+                                      fill: =props.solar_color
+                                      r: 1
+                                      style:
+                                        stroke-width: 4
+                                      tag: circle
+                                      vector-effect: non-scaling-stroke
+                                      visible: =#props.pv_own_consumption > 0
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            calcMode: linear
+                                            dur: 5s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#path1"
+                                  - component: f7-row
+                                    config:
+                                      d: M47,0 v15 c0,40 -10,35 -30,35 h-20
+                                      fill: none
+                                      id: path2
+                                      stroke: =props.grid_surplus_color
+                                      stroke-width: 1
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: =#props.grid_surplus > 0
+                                  - component: f7-row
+                                    config:
+                                      fill: =props.grid_surplus_color
+                                      r: 1
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: =#props.grid_surplus > 0
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            calcMode: linear
+                                            dur: 3s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#path2"
+                                  - component: f7-row
+                                    config:
+                                      d: M0,56 H100
+                                      fill: none
+                                      id: path3
+                                      stroke: =props.grid_color
+                                      stroke-width: 1
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: =#props.grid_consumption > 0
+                                  - component: f7-row
+                                    config:
+                                      fill: =props.grid_color
+                                      r: 1
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: =#props.grid_consumption > 0
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            calcMode: linear
+                                            dur: 3s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#path3"
+                - component: f7-col
+                  config:
+                    style:
+                      align-items: center
+                      display: flex
+                      flex-direction: column
+                      padding-left: 5px
+                      padding-top: 130px
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems:
+                            - =props.pv_own_consumption
+                          iconColor: =props.solar_color
+                          iconF7: arrow_right
+                          iconSize: 12px
+                          style:
+                            font-size: =props.subvalue_fontsize
+                            white-space: nowrap
+                          text: =@props.pv_own_consumption
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems:
+                            - =props.grid_consumption
+                          iconColor: =props.grid_color
+                          iconF7: arrow_right
+                          iconSize: 12px
+                          style:
+                            font-size: =props.subvalue_fontsize
+                            white-space: nowrap
+                          text: =@props.grid_consumption
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            border-color: =props.home_color
+                            border-radius: 50px
+                            border-style: solid
+                            border-width: 2px
+                            display: flex
+                            flex-direction: column
+                            height: 100px
+                            justify-content: center
+                            margin-bottom: 10px
+                            margin-top: 5px
+                            padding-bottom: 5px
+                            width: 100px
+                        slots:
+                          default:
+                            - component: oh-icon
+                              config:
+                                color: grey
+                                height: 65px
+                                icon: if:emojione:house-with-garden
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems:
+                            - =props.home_consumption
+                          style:
+                            border-color: =props.home_color
+                            border-radius: =props.value_borderradius
+                            border-style: solid
+                            border-width: 1px
+                            font-size: =props.value_fontsize
+                            padding: 5px
+                            white-space: nowrap
+                          text: =@props.home_consumption
+                - component: f7-col
+                  config:
+                    style:
+                      align-items: start
+                      display: flex
+                      flex-direction: column
+                      justify-content: end
+                  slots:
+                    default:
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: row
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  align-items: center
+                                  border-left-color: =props.home_color
+                                  border-left-style: solid
+                                  border-left-width: 1px
+                                  display: flex
+                                  flex-direction: row
+                                  margin-bottom: 0px
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      color: grey
+                                      height: 40px
+                                      icon: if:mdi:home-floor-1
+                                  - component: oh-link
+                                    config:
+                                      action: analyzer
+                                      actionAnalyzerItems:
+                                        - =props.home_ff_consumption
+                                      style:
+                                        font-size: =props.subvalue_fontsize
+                                        padding: 5px
+                                        white-space: nowrap
+                                      text: =@props.home_ff_consumption
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: row
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  align-items: center
+                                  border-left-color: =props.home_color
+                                  border-left-style: solid
+                                  border-left-width: 1px
+                                  display: flex
+                                  flex-direction: row
+                                  margin-bottom: 0px
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      color: grey
+                                      height: 40px
+                                      icon: if:mdi:home-floor-0
+                                  - component: oh-link
+                                    config:
+                                      action: analyzer
+                                      actionAnalyzerItems:
+                                        - =props.home_gf_consumption
+                                      style:
+                                        font-size: =props.subvalue_fontsize
+                                        padding: 5px
+                                        white-space: nowrap
+                                      text: =@props.home_gf_consumption
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: row
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  align-items: center
+                                  border-left-color: =props.home_color
+                                  border-left-style: solid
+                                  border-left-width: 1px
+                                  display: flex
+                                  flex-direction: row
+                                  margin-bottom: 0px
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      color: grey
+                                      height: 40px
+                                      icon: if:mdi:garage-variant
+                                  - component: oh-link
+                                    config:
+                                      action: analyzer
+                                      actionAnalyzerItems:
+                                        - =props.home_ba_consumption
+                                      style:
+                                        font-size: =props.subvalue_fontsize
+                                        margin-left: 5px
+                                        white-space: nowrap
+                                      text: =@props.home_ba_consumption
