@@ -10,6 +10,21 @@ Filename: dd-energy.yml
 
 Params:
  - Title: string
+ - Grid Consumption: item
+ - MAX Grid Consumption (W): number
+ - Grid Surplus: item
+ - PV Production: item
+ - MAX PV Production (W): number
+ - PV Own Consumption: item
+ - Home Consumption: item
+ - Home FF Consumption: item
+ - Limit FF Consumption: number
+ - Home GF Consumption: item
+ - Limit GF Consumption: number
+ - Home BA Consumption: item
+ - Limit BA Consumption: number
+ - Real Time Consumption: item
+ - Limit Real Time Consumption: number
  - Value Font Size: string
  - Subvalue Font Size: string
  - Value Border Radius: string
@@ -17,14 +32,14 @@ Params:
  - Grid Surplus Color: string
  - Solar Color: string
  - Home Color: string
- - Grid Consumption: item
- - Grid Surplus: item
- - PV Production: item
- - PV Own Consumption: item
- - Home Consumption: item
- - Home FF Consumption: item
- - Home GF Consumption: item
- - Home BA Consumption: item
- - Real Time Consumption: item
+ - Min opacity: number
 
+### *version 0.2*
+ - Added opacity support
+ - Added warning
+ - Added dynamic icons
+
+### *version 0.1*
+ - initial version
+ 
 Credits to: https://community.openhab.org/t/energy-widget-like-in-home-assistant-demo/131189
