@@ -99,6 +99,18 @@ props:
       name: limit_realtime_consumption
       required: false
       type: TEXT
+    - context: item
+      description: The item for FF A/C consumption
+      label: FF A/C Consumption
+      name: ff_ac_consumption
+      required: false
+      type: TEXT
+    - context: item
+      description: The item for GF A/C consumption
+      label: GF A/C Consumption
+      name: gf_ac_consumption
+      required: false
+      type: TEXT
     - context: string
       description: "Value Font Size (ex: 12px)"
       label: Value Font Size
@@ -146,9 +158,8 @@ props:
       label: Min opacity
       name: min_opacity
       required: false
-      type: NUMBER
   parameterGroups: []
-timestamp: Feb 10, 2025, 1:24:31 PM
+timestamp: Feb 11, 2025, 11:26:13 AM
 component: f7-card
 config:
   title: =props.title
@@ -398,8 +409,8 @@ slots:
                                             stroke: =props.grid_color
                                             stroke-width: 1
                                             style:
-                                              opacity: =(#props.grid_consumption)>0?props.min_opacity + (#props.grid_consumption
-                                                *
+                                              opacity: =(#props.grid_consumption)>0?props.min_opacity +
+                                                (#props.grid_consumption *
                                                 (1-props.min_opacity)/props.max_grid_consumption):1
                                             tag: path
                                             vector-effect: non-scaling-stroke
@@ -638,3 +649,98 @@ slots:
                                             style:
                                               margin-left: 10px
                                             visible: =#props.home_ba_consumption>#props.limit_ba_consumption
+                - component: f7-block
+                  config:
+                    style:
+                      display: flex
+                      justify-content: end
+                      margin: 0
+                      padding: 0
+                      padding-right: var(--f7-block-padding-horizontal)
+                  slots:
+                    default:
+                      - component: f7-col
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: column
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  align-items: center
+                                  border-color: =props.home_color
+                                  border-radius: 10px
+                                  border-style: solid
+                                  border-width: 1px
+                                  display: flex
+                                  flex-direction: row
+                                  height: 70px
+                                  justify-content: center
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      color: =props.home_color
+                                      icon: if:mdi:air-conditioner
+                                      height: 40px
+                                  - component: oh-icon
+                                    config:
+                                      color: =props.home_color
+                                      icon: if:mdi:home-floor-1
+                                      height: 40px
+                            - component: oh-link
+                              config:
+                                action: analyzer
+                                actionAnalyzerItems:
+                                  - =props.ff_ac_consumption
+                                style:
+                                  font-size: =props.value_fontsize
+                                  white-space: nowrap
+                                  margin-top: 5px
+                                text: =@props.ff_ac_consumption
+                      - component: f7-col
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: column
+                            margin-left: 10px
+                        slots:
+                          default:
+                            - component: f7-block
+                              config:
+                                style:
+                                  align-items: center
+                                  border-color: =props.home_color
+                                  border-radius: 10px
+                                  border-style: solid
+                                  border-width: 1px
+                                  display: flex
+                                  flex-direction: row
+                                  height: 70px
+                                  justify-content: center
+                              slots:
+                                default:
+                                  - component: oh-icon
+                                    config:
+                                      color: =props.home_color
+                                      icon: if:mdi:air-conditioner
+                                      height: 40px
+                                  - component: oh-icon
+                                    config:
+                                      color: =props.home_color
+                                      icon: if:mdi:home-floor-0
+                                      height: 40px
+                            - component: oh-link
+                              config:
+                                action: analyzer
+                                actionAnalyzerItems:
+                                  - =props.gf_ac_consumption
+                                style:
+                                  font-size: =props.value_fontsize
+                                  white-space: nowrap
+                                  margin-top: 5px
+                                text: =@props.gf_ac_consumption

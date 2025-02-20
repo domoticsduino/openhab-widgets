@@ -24,6 +24,8 @@ Params:
  - Home BA Consumption: item
  - Limit BA Consumption: number
  - Real Time Consumption: item
+ - FF A/C Consumption: item
+ - GF A/C Consumption: item
  - Limit Real Time Consumption: number
  - Value Font Size: string
  - Subvalue Font Size: string
@@ -34,6 +36,9 @@ Params:
  - Home Color: string
  - Min opacity: number
 
+### *version 0.3*
+ - Added a/c consumption
+ 
 ### *version 0.2*
  - Added opacity support
  - Added warning
